@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#087f5b"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.json">
+<title>ছাত্র সমিতি</title>
+<style>
+:root{--g:#087f5b;--g2:#0b6b50;--light:#e9f7f1;--red:#dc3545;--orange:#f59f00;--blue:#1971c2;--ink:#17352b;--muted:#718078;--bg:#f5f8f7;--card:#fff;--line:#dce8e3}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans Bengali","Noto Sans",sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:520px;margin:auto;min-height:100vh;background:var(--bg)}
+header{position:sticky;top:0;z-index:5;background:var(--g);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px #0002}
+.brand{font-weight:800;font-size:20px}.sub{font-size:11px;opacity:.8}.iconbtn{background:#ffffff22;border:0;color:#fff;border-radius:10px;padding:8px 10px}
+main{padding:14px 14px 82px}.screen{display:none}.screen.active{display:block}
+h2{font-size:20px;margin:4px 0 14px}.muted{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;box-shadow:0 1px 4px #17352b0a}
+.stat .label{font-size:12px;color:var(--muted)}.stat .value{font-size:21px;font-weight:800;margin-top:5px}.green{color:var(--g)}.red{color:var(--red)}.orange{color:var(--orange)}.blue{color:var(--blue)}
+.toolbar{display:flex;gap:8px;margin-bottom:12px}.toolbar>*{flex:1}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff;color:var(--ink);outline:none}input:focus,select:focus,textarea:focus{border-color:var(--g)}textarea{min-height:75px;resize:vertical}
+.btn{border:0;border-radius:10px;padding:10px 13px;background:var(--g);color:#fff;font-weight:700}.btn.secondary{background:#e8f2ee;color:var(--g)}.btn.danger{background:#ffe9ec;color:var(--red)}.btn.small{padding:7px 9px;font-size:12px}
+.list{display:flex;flex-direction:column;gap:9px}.row{background:#fff;border:1px solid var(--line);border-radius:13px;padding:11px;display:flex;align-items:center;gap:10px}.avatar{width:42px;height:42px;border-radius:50%;background:var(--light);display:grid;place-items:center;font-weight:800;color:var(--g);flex:0 0 42px}.grow{flex:1;min-width:0}.name{font-weight:750}.meta{font-size:11px;color:var(--muted);margin-top:3px}.pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700}.paid{background:#dff6e9;color:#087f5b}.unpaid{background:#ffe4e7;color:#c92a2a}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:17px 0 8px;font-weight:800}
+.tablewrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:13px}.table{width:100%;border-collapse:collapse;min-width:420px}.table th,.table td{padding:9px;border-bottom:1px solid var(--line);font-size:12px;text-align:left}.table th{background:#f0f6f3;position:sticky;top:0}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);z-index:6}.nav{border:0;background:#fff;padding:8px 2px 7px;color:#718078;font-size:10px}.nav b{display:block;font-size:18px;line-height:18px}.nav.active{color:var(--g);font-weight:800}
+.form{display:flex;flex-direction:column;gap:10px}.form label{font-size:12px;font-weight:700}.field{display:flex;flex-direction:column;gap:5px}.actions{display:flex;gap:8px;margin-top:5px}.actions>*{flex:1}
+.notice{background:#fff7df;border:1px solid #ffe08a;color:#765400;border-radius:12px;padding:10px;font-size:12px}
+.barbox{height:150px;display:flex;align-items:end;gap:8px;padding:10px 4px 2px}.bar{flex:1;background:var(--g);border-radius:6px 6px 2px 2px;min-height:4px;position:relative}.bar span{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--muted);white-space:nowrap}
+.modal{position:fixed;inset:0;background:#0006;display:none;align-items:flex-end;z-index:20}.modal.open{display:flex}.sheet{width:min(520px,100%);margin:auto;background:#fff;border-radius:18px 18px 0 0;padding:18px;max-height:90vh;overflow:auto}.sheet h3{margin:0 0 14px}.x{float:right;border:0;background:#eef3f1;border-radius:50%;width:30px;height:30px}
+.empty{text-align:center;padding:28px;color:var(--muted)}.check{width:20px;height:20px;accent-color:var(--g)}
+@media(min-width:700px){body{padding:20px}.app{border-radius:20px;overflow:hidden;box-shadow:0 8px 40px #0002}}
+
+.authGate{position:fixed;inset:0;background:linear-gradient(145deg,#056047,#0b8b67);z-index:100;display:grid;place-items:center;padding:20px}
+.authCard{width:min(420px,100%);background:#fff;border-radius:22px;padding:24px;box-shadow:0 18px 60px #0004}.authLogo{text-align:center;font-size:54px}.authTitle{text-align:center;font-size:25px;font-weight:900;color:#087f5b}.authSub{text-align:center;color:#718078;font-size:12px;margin:4px 0 20px}.authErr{display:none;background:#ffe7ea;color:#b4232d;border-radius:10px;padding:9px;font-size:12px;margin-bottom:10px}.syncBadge{position:fixed;right:10px;top:68px;z-index:10;background:#fff;border:1px solid #dce8e3;border-radius:999px;padding:5px 9px;font-size:10px;box-shadow:0 2px 8px #0001}
+</style>
+</head>
+<body>
+
+<div id="authGate" class="authGate">
+  <div class="authCard">
+    <div class="authLogo">🎓</div>
+    <div class="authTitle">ছাত্র সমিতি</div>
+    <div class="authSub">Admin Login · Cloud Sync</div>
+    <div id="authErr" class="authErr"></div>
+    <form class="form" onsubmit="window.adminLogin(event)">
+      <div class="field"><label>Admin Email</label><input id="loginEmail" type="email" placeholder="admin@example.com" required></div>
+      <div class="field"><label>Password</label><input id="loginPassword" type="password" placeholder="••••••••" required></div>
+      <button class="btn">লগইন</button>
+      <button type="button" class="btn secondary" onclick="window.sendReset()">পাসওয়ার্ড রিসেট ইমেইল</button>
+    </form>
+    <div class="notice" style="margin-top:12px">এই সংস্করণে ডেটা Firebase Realtime Database-এ নিরাপদভাবে sync হবে।</div>
+  </div>
+</div>
+<div id="syncBadge" class="syncBadge">☁ সংযোগ প্রস্তুত...</div>
+<div class="app">
+<header><div><div class="brand">🎓 ছাত্র সমিতি</div><div class="sub">হিসাব শুরু: অক্টোবর ২০২৬</div></div><button class="iconbtn" onclick="openSettings()">⚙</button></header>
+<main>
+<section id="dashboard" class="screen active">
+<h2>ড্যাশবোর্ড</h2>
+<div class="toolbar"><select id="dashMonth" onchange="renderDashboard()"></select></div>
+<div class="grid">
+<div class="card stat"><div class="label">মোট সদস্য</div><div class="value" id="sMembers">0</div></div>
+<div class="card stat"><div class="label">মোট জমা</div><div class="value green" id="sDeposits">৳0</div></div>
+<div class="card stat"><div class="label">মোট বকেয়া</div><div class="value red" id="sDue">৳0</div></div>
+<div class="card stat"><div class="label">মোট খরচ</div><div class="value orange" id="sExpenses">৳0</div></div>
+<div class="card stat"><div class="label">বর্তমান ব্যালেন্স</div><div class="value blue" id="sBalance">৳0</div></div>
+<div class="card stat"><div class="label">এই মাসে জমা দিয়েছে</div><div class="value green" id="sPaid">0 জন</div></div>
+</div>
+<div class="section-title">শেষ ৬ মাসের জমা</div><div class="card"><div class="barbox" id="bars"></div></div>
+<div class="section-title">এই মাসের অবস্থা <button class="btn small" onclick="showScreen('collection')">বিস্তারিত</button></div>
+<div class="grid"><div class="card stat"><div class="label">জমা দিয়েছে</div><div class="value green" id="mPaid">0</div></div><div class="card stat"><div class="label">দেয়নি</div><div class="value red" id="mUnpaid">0</div></div></div>
+</section>
+
+<section id="members" class="screen">
+<h2>সদস্য তালিকা</h2>
+<div class="toolbar"><input id="memberSearch" placeholder="নাম, ID বা মোবাইল খুঁজুন..." oninput="renderMembers()"><button class="btn" style="flex:0 0 48px" onclick="openMember()">＋</button></div>
+<div class="list" id="memberList"></div>
+</section>
+
+<section id="collection" class="screen">
+<h2>মাসিক জমা</h2><div class="toolbar"><select id="colMonth" onchange="renderCollection()"></select></div>
+<div class="grid"><div class="card stat"><div class="label">মোট সদস্য</div><div class="value" id="cTotal">0</div></div><div class="card stat"><div class="label">জমা দিয়েছে</div><div class="value green" id="cPaid">0</div></div><div class="card stat"><div class="label">দেয়নি</div><div class="value red" id="cUnpaid">0</div></div><div class="card stat"><div class="label">এই মাসের বকেয়া</div><div class="value red" id="cDue">৳0</div></div></div>
+<div class="section-title">সদস্যদের তালিকা</div><div class="tablewrap"><table class="table"><thead><tr><th>সদস্য</th><th>পরিমাণ</th><th>অবস্থা</th><th>তারিখ</th><th></th></tr></thead><tbody id="collectionRows"></tbody></table></div>
+</section>
+
+<section id="reports" class="screen">
+<h2>রিপোর্ট</h2>
+<div class="toolbar"><select id="reportYear" onchange="renderReports()"></select><button class="btn secondary" onclick="printReport()">🖨 রিপোর্ট</button></div>
+<div class="grid"><div class="card stat"><div class="label">বছরের মোট জমা</div><div class="value green" id="rDeposit">৳0</div></div><div class="card stat"><div class="label">বছরের মোট খরচ</div><div class="value orange" id="rExpense">৳0</div></div><div class="card stat"><div class="label">বছরের বকেয়া</div><div class="value red" id="rDue">৳0</div></div><div class="card stat"><div class="label">বছর শেষে ব্যালেন্স</div><div class="value blue" id="rBalance">৳0</div></div></div>
+<div class="section-title">মাসভিত্তিক হিসাব</div><div class="tablewrap"><table class="table"><thead><tr><th>মাস</th><th>প্রত্যাশিত</th><th>জমা</th><th>বকেয়া</th></tr></thead><tbody id="reportRows"></tbody></table></div>
+<div class="section-title">সদস্যভিত্তিক রিপোর্ট</div><div class="list" id="reportMembers"></div>
+</section>
+
+<section id="expenses" class="screen">
+<h2>খরচের হিসাব <button class="btn small" style="float:right" onclick="openExpense()">＋ খরচ</button></h2>
+<div class="grid"><div class="card stat"><div class="label">মোট খরচ</div><div class="value orange" id="eTotal">৳0</div></div><div class="card stat"><div class="label">বর্তমান ব্যালেন্স</div><div class="value blue" id="eBalance">৳0</div></div></div>
+<div class="section-title">খরচের তালিকা</div><div class="list" id="expenseList"></div>
+</section>
+
+<section id="settings" class="screen">
+<h2>সেটিংস</h2>
+<div class="card form">
+<div class="field"><label>সমিতির নাম</label><input id="setName"></div>
+<div class="field"><label>বর্তমান মাসিক জমা</label><input id="setAmount" type="number" min="0"></div>
+<div class="field"><label>নতুন জমার পরিমাণ কার্যকর হবে</label><input id="setEffective" type="month"></div>
+<div class="actions"><button class="btn" onclick="saveSettings()">সংরক্ষণ</button></div>
+</div>
+<div class="section-title">ডেটা</div><div class="card form">
+<button class="btn secondary" onclick="exportData()">⬇ JSON Backup</button>
+<button class="btn secondary" onclick="document.getElementById('importFile').click()">⬆ Backup Restore</button>
+<input id="importFile" type="file" accept=".json" style="display:none" onchange="importData(event)">
+<button class="btn secondary" onclick="window.adminLogout()">🚪 Admin Logout</button><button class="btn danger" onclick="clearAll()">সব ডেটা মুছে ফেলুন</button>
+</div>
+<div class="notice" style="margin-top:12px">পুরোনো মাসের জমার পরিমাণ পরিবর্তন হবে না। নতুন পরিমাণ নির্ধারিত কার্যকর মাস থেকে প্রযোজ্য হবে।</div>
+</section>
+</main>
+<nav class="bottom">
+<button class="nav active" data-screen="dashboard" onclick="showScreen('dashboard')"><b>⌂</b>হোম</button>
+<button class="nav" data-screen="members" onclick="showScreen('members')"><b>♟</b>সদস্য</button>
+<button class="nav" data-screen="collection" onclick="showScreen('collection')"><b>৳</b>জমা</button>
+<button class="nav" data-screen="reports" onclick="showScreen('reports')"><b>▥</b>রিপোর্ট</button>
+<button class="nav" data-screen="expenses" onclick="showScreen('expenses')"><b>▣</b>খরচ</button>
+</nav>
+</div>
+
+<div class="modal" id="modal"><div class="sheet"><button class="x" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
+
+<script>
+const KEY='student_somiti_v1';
+let db=JSON.parse(localStorage.getItem(KEY)||'null')||{settings:{name:'ছাত্র সমিতি',amount:1000,effective:'2026-10'},members:[],payments:{},expenses:[]};
+const start='2026-10';
+function save(){localStorage.setItem(KEY,JSON.stringify(db)); if(window.queueCloudSync) window.queueCloudSync(db)}
+function money(n){return '৳'+Number(n||0).toLocaleString('bn-BD')}
+function ym(d=new Date()){return d.toISOString().slice(0,7)}
+function monthLabel(s){let [y,m]=s.split('-');let names=['','জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];return names[+m]+' '+y}
+function monthsBetween(a,b){let out=[];let [y,m]=a.split('-').map(Number), [Y,M]=b.split('-').map(Number);while(y<Y||(y===Y&&m<=M)){out.push(`${y}-${String(m).padStart(2,'0')}`);m++;if(m===13){m=1;y++}}return out}
+function currentYM(){let d=new Date();let s=ym(d);return s<start?start:s}
+function amountFor(month,member=null){let changes=[{effective:db.settings.effective,amount:Number(db.settings.amount)||0}]; if(member?.amountChanges) changes.push(...member.amountChanges); changes.sort((a,b)=>a.effective.localeCompare(b.effective)); let v=1000;for(const c of changes)if(c.effective<=month)v=c.amount;return v}
+function allMonths(){return monthsBetween(start,currentYM())}
+function memberPayment(mid,month){return db.payments[mid+'|'+month]}
+function totals(){let dep=0,due=0;for(const m of allMonths())for(const mem of db.members){let a=amountFor(m,mem);let p=memberPayment(mem.id,m);if(p)dep+=Number(p.amount);else due+=a}let exp=db.expenses.reduce((s,x)=>s+Number(x.amount),0);return {dep,due,exp,balance:dep-exp}}
+function fillMonths(){['dashMonth','colMonth'].forEach(id=>{let el=document.getElementById(id),val=el.value||currentYM();el.innerHTML=allMonths().map(m=>`<option value="${m}">${monthLabel(m)}</option>`).join('');el.value=allMonths().includes(val)?val:currentYM()});let yel=document.getElementById('reportYear');let years=[...new Set(allMonths().map(x=>x.slice(0,4)))];let v=yel.value||currentYM().slice(0,4);yel.innerHTML=years.map(y=>`<option>${y}</option>`).join('');yel.value=years.includes(v)?v:years.at(-1)}
+function showScreen(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.screen===id));if(id==='dashboard')renderDashboard();if(id==='members')renderMembers();if(id==='collection')renderCollection();if(id==='reports')renderReports();if(id==='expenses')renderExpenses();if(id==='settings')renderSettings()}
+function openSettings(){showScreen('settings')}
+function renderDashboard(){fillMonths();let t=totals(),m=document.getElementById('dashMonth').value;document.getElementById('sMembers').textContent=db.members.length;document.getElementById('sDeposits').textContent=money(t.dep);document.getElementById('sDue').textContent=money(t.due);document.getElementById('sExpenses').textContent=money(t.exp);document.getElementById('sBalance').textContent=money(t.balance);let paid=db.members.filter(x=>memberPayment(x.id,m)).length;document.getElementById('sPaid').textContent=paid+' জন';document.getElementById('mPaid').textContent=paid;document.getElementById('mUnpaid').textContent=db.members.length-paid;let six=allMonths().slice(-6), vals=six.map(x=>db.members.reduce((s,mem)=>s+Number(memberPayment(mem.id,x)?.amount||0),0)), max=Math.max(...vals,1);document.getElementById('bars').innerHTML=six.map((x,i)=>`<div class="bar" style="height:${Math.max(4,vals[i]/max*120)}px"><span>${x.slice(5)}</span></div>`).join('')}
+function renderMembers(){let q=(document.getElementById('memberSearch').value||'').toLowerCase();let arr=db.members.filter(m=>(m.name+' '+m.id+' '+m.phone).toLowerCase().includes(q));document.getElementById('memberList').innerHTML=arr.length?arr.map(m=>`<div class="row"><div class="avatar">${(m.name||'?')[0]}</div><div class="grow" onclick="openMember('${m.id}')"><div class="name">${m.name}</div><div class="meta">${m.id} · ${m.phone||'মোবাইল নেই'}</div></div><div><div class="pill paid">${money(amountFor(currentYM(),m))}</div><button class="btn small secondary" onclick="openMember('${m.id}')">দেখুন</button></div></div>`).join(''):`<div class="empty">কোনো সদস্য নেই। ＋ চাপ দিয়ে সদস্য যোগ করুন।</div>`}
+function renderCollection(){fillMonths();let m=document.getElementById('colMonth').value,paid=db.members.filter(x=>memberPayment(x.id,m)).length, due=db.members.filter(x=>!memberPayment(x.id,m)).reduce((s,x)=>s+amountFor(m,x),0);document.getElementById('cTotal').textContent=db.members.length;document.getElementById('cPaid').textContent=paid;document.getElementById('cUnpaid').textContent=db.members.length-paid;document.getElementById('cDue').textContent=money(due);document.getElementById('collectionRows').innerHTML=db.members.map(mem=>{let p=memberPayment(mem.id,m),a=amountFor(m,mem);return `<tr><td><b>${mem.name}</b><br><small>${mem.id}</small></td><td>${money(p?.amount||a)}</td><td><span class="pill ${p?'paid':'unpaid'}">${p?'জমা':'বকেয়া'}</span></td><td>${p?.date||'—'}</td><td>${p?`<button class="btn small danger" onclick="togglePayment('${mem.id}','${m}')">বাতিল</button>`:`<button class="btn small" onclick="togglePayment('${mem.id}','${m}')">জমা</button>`}</td></tr>`}).join('')}
+function togglePayment(mid,m){let k=mid+'|'+m;if(db.payments[k]){if(confirm('এই জমাটি বাতিল করবেন?'))delete db.payments[k]}else{db.payments[k]={amount:amountFor(m,db.members.find(x=>x.id===mid)),date:new Date().toLocaleDateString('en-GB')}}save();renderCollection();renderDashboard()}
+function renderReports(){fillMonths();let y=document.getElementById('reportYear').value,ms=allMonths().filter(x=>x.startsWith(y)),dep=0,due=0;let rows=ms.map(m=>{let expected=db.members.reduce((s,x)=>s+amountFor(m,x),0),d=db.members.reduce((s,x)=>s+Number(memberPayment(x.id,m)?.amount||0),0);dep+=d;due+=expected-d;return `<tr><td>${monthLabel(m)}</td><td>${money(expected)}</td><td class="green">${money(d)}</td><td class="red">${money(expected-d)}</td></tr>`}).join('');let exp=db.expenses.filter(x=>x.date.startsWith(y)).reduce((s,x)=>s+Number(x.amount),0);document.getElementById('rDeposit').textContent=money(dep);document.getElementById('rExpense').textContent=money(exp);document.getElementById('rDue').textContent=money(due);document.getElementById('rBalance').textContent=money(dep-exp);document.getElementById('reportRows').innerHTML=rows||'<tr><td colspan="4">ডেটা নেই</td></tr>';document.getElementById('reportMembers').innerHTML=db.members.map(mem=>{let d=ms.reduce((s,m)=>s+Number(memberPayment(mem.id,m)?.amount||0),0),u=ms.reduce((s,m)=>s+(!memberPayment(mem.id,m)?amountFor(m,mem):0),0);return `<div class="row"><div class="avatar">${mem.name[0]}</div><div class="grow"><div class="name">${mem.name}</div><div class="meta">${mem.id} · জমা ${money(d)} · বকেয়া ${money(u)}</div></div><button class="btn small secondary" onclick="memberReport('${mem.id}')">রিপোর্ট</button></div>`}).join('')}
+function renderExpenses(){let t=totals();document.getElementById('eTotal').textContent=money(t.exp);document.getElementById('eBalance').textContent=money(t.balance);document.getElementById('expenseList').innerHTML=db.expenses.length?[...db.expenses].reverse().map(x=>`<div class="row"><div class="grow"><div class="name">${x.title}</div><div class="meta">${x.date} · ${x.note||'বিবরণ নেই'}</div></div><b class="orange">${money(x.amount)}</b><button class="btn small danger" onclick="deleteExpense('${x.id}')">×</button></div>`).join(''):'<div class="empty">এখনও কোনো খরচ যোগ করা হয়নি।</div>'}
+function renderSettings(){document.getElementById('setName').value=db.settings.name;document.getElementById('setAmount').value=db.settings.amount;document.getElementById('setEffective').value=db.settings.effective}
+function openMember(id=''){let m=db.members.find(x=>x.id===id)||{id:'',name:'',phone:'',join:start,amountChanges:[],note:''};document.getElementById('modalBody').innerHTML=`<h3>${id?'সদস্য সম্পাদনা':'নতুন সদস্য যোগ করুন'}</h3><form class="form" onsubmit="saveMember(event,'${id}')"><div class="field"><label>সদস্য ID *</label><input name="id" value="${m.id}" ${id?'readonly':''} required></div><div class="field"><label>নাম *</label><input name="name" value="${m.name}" required></div><div class="field"><label>মোবাইল</label><input name="phone" value="${m.phone||''}"></div><div class="field"><label>যোগদানের তারিখ</label><input name="join" type="date" value="${m.join||'2026-10-01'}"></div><div class="field"><label>বিশেষ মাসিক জমা (ঐচ্ছিক)</label><input name="amount" type="number" min="0" value="${m.amountChanges?.[0]?.amount||''}" placeholder="খালি রাখলে সাধারণ হার"></div><div class="field"><label>নোট</label><textarea name="note">${m.note||''}</textarea></div><div class="actions"><button type="button" class="btn secondary" onclick="closeModal()">বাতিল</button><button class="btn">সংরক্ষণ</button></div>${id?`<button type="button" class="btn danger" onclick="deleteMember('${id}')">সদস্য মুছে ফেলুন</button>`:''}</form>`;document.getElementById('modal').classList.add('open')}
+function saveMember(e,old){e.preventDefault();let f=new FormData(e.target),m={id:f.get('id').trim(),name:f.get('name').trim(),phone:f.get('phone').trim(),join:f.get('join'),note:f.get('note').trim(),amountChanges:[]};if(f.get('amount'))m.amountChanges=[{effective:m.join?.slice(0,7)||start,amount:Number(f.get('amount'))}];if(!old){if(db.members.some(x=>x.id===m.id))return alert('এই Member ID আগে থেকেই আছে।');db.members.push(m)}else db.members[db.members.findIndex(x=>x.id===old)]=m;save();closeModal();renderMembers();renderDashboard()}
+function deleteMember(id){if(!confirm('এই সদস্য ও তার জমার হিসাব মুছে ফেলবেন?'))return;db.members=db.members.filter(x=>x.id!==id);Object.keys(db.payments).forEach(k=>{if(k.startsWith(id+'|'))delete db.payments[k]});save();closeModal();renderMembers();renderDashboard()}
+function memberReport(id){let m=db.members.find(x=>x.id===id),ms=allMonths(),d=ms.reduce((s,x)=>s+Number(memberPayment(id,x)?.amount||0),0),u=ms.reduce((s,x)=>s+(!memberPayment(id,x)?amountFor(x,m):0),0);document.getElementById('modalBody').innerHTML=`<h3>${m.name}</h3><div class="muted">${m.id} · ${m.phone||''}</div><div class="grid" style="margin-top:12px"><div class="card stat"><div class="label">মোট জমা</div><div class="value green">${money(d)}</div></div><div class="card stat"><div class="label">মোট বকেয়া</div><div class="value red">${money(u)}</div></div></div><div class="section-title">মাসভিত্তিক হিসাব</div><div class="tablewrap"><table class="table"><tr><th>মাস</th><th>প্রদেয়</th><th>জমা</th><th>অবস্থা</th></tr>${ms.map(x=>{let p=memberPayment(id,x),a=amountFor(x,m);return `<tr><td>${monthLabel(x)}</td><td>${money(a)}</td><td>${p?money(p.amount):'—'}</td><td><span class="pill ${p?'paid':'unpaid'}">${p?'জমা':'বকেয়া'}</span></td></tr>`}).join('')}</table></div><button class="btn" style="margin-top:12px;width:100%" onclick="printMember('${id}')">🖨 PDF/Print রিপোর্ট</button>`;document.getElementById('modal').classList.add('open')}
+function printMember(id){let m=db.members.find(x=>x.id===id),ms=allMonths();let html=`<h1>${db.settings.name}</h1><h2>সদস্যের রিপোর্ট: ${m.name}</h2><p>ID: ${m.id} | মোবাইল: ${m.phone||''}</p><table border="1" cellspacing="0" cellpadding="6" width="100%"><tr><th>মাস</th><th>প্রদেয়</th><th>জমা</th><th>অবস্থা</th></tr>${ms.map(x=>{let p=memberPayment(id,x),a=amountFor(x,m);return `<tr><td>${monthLabel(x)}</td><td>${a}</td><td>${p?p.amount:0}</td><td>${p?'জমা':'বকেয়া'}</td></tr>`}).join('')}</table>`;printHtml(html)}
+function printReport(){let y=document.getElementById('reportYear').value;let ms=allMonths().filter(x=>x.startsWith(y));let html=`<h1>${db.settings.name}</h1><h2>বার্ষিক রিপোর্ট ${y}</h2><table border="1" cellspacing="0" cellpadding="6" width="100%"><tr><th>মাস</th><th>প্রত্যাশিত</th><th>জমা</th><th>বকেয়া</th></tr>${ms.map(m=>{let e=db.members.reduce((s,x)=>s+amountFor(m,x),0),d=db.members.reduce((s,x)=>s+Number(memberPayment(x.id,m)?.amount||0),0);return `<tr><td>${monthLabel(m)}</td><td>${e}</td><td>${d}</td><td>${e-d}</td></tr>`}).join('')}</table>`;printHtml(html)}
+function printHtml(html){
+  let w=window.open('','_blank');
+  if(!w){alert('Popup blocked. Browser settings থেকে popup অনুমতি দিন।');return}
+  w.document.write(`<html><head><title>রিপোর্ট</title><style>body{font-family:Arial,sans-serif;padding:30px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #bbb;padding:6px}th{background:#eee}</style></head><body>${html}</body></html>`);
+  w.document.close();
+  w.focus();
+  setTimeout(()=>w.print(),300);
+}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getDatabase, ref, get, set, onValue } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB21VBTFWSjkvv5iKjXRNWwAYNQXyeRNVA",
+  authDomain: "student-somiti.firebaseapp.com",
+  projectId: "student-somiti",
+  storageBucket: "student-somiti.firebasestorage.app",
+  messagingSenderId: "341154097811",
+  appId: "1:341154097811:web:11cf280526af4903f27b66",
+  measurementId: "G-6KQY4EJFGT",
+  databaseURL: "https://student-somiti-default-rtdb.asia-southeast1.firebasedatabase.app"
+};
+
+let auth=null, rtdb=null, unsub=null, syncTimer=null, currentUser=null, applyingRemote=false;
+const gate=document.getElementById('authGate');
+const err=document.getElementById('authErr');
+const badge=document.getElementById('syncBadge');
+const KEY='student_somiti_v1';
+
+function setBadge(t){badge.textContent=t}
+function showErr(t){err.textContent=t;err.style.display='block'}
+function hideErr(){err.style.display='none'}
+function sameData(a,b){
+  try{return JSON.stringify(a)===JSON.stringify(b)}catch(_){return false}
+}
+
+try{
+  const app=initializeApp(firebaseConfig);
+  auth=getAuth(app);
+  rtdb=getDatabase(app);
+
+  window.adminLogin=async (e)=>{
+    e.preventDefault(); hideErr(); setBadge("☁ লগইন হচ্ছে...");
+    try{
+      await signInWithEmailAndPassword(
+        auth,
+        document.getElementById('loginEmail').value.trim(),
+        document.getElementById('loginPassword').value
+      );
+    }catch(e){
+      showErr(firebaseError(e)); setBadge("☁ লগইন ব্যর্থ");
+    }
+  };
+
+  window.sendReset=async ()=>{
+    hideErr();
+    const email=document.getElementById('loginEmail').value.trim();
+    if(!email){showErr("আগে Admin Email লিখুন।");return}
+    try{
+      await sendPasswordResetEmail(auth,email);
+      alert("Password reset email পাঠানো হয়েছে।");
+    }catch(e){showErr(firebaseError(e))}
+  };
+
+  window.adminLogout=()=>signOut(auth);
+
+  onAuthStateChanged(auth, async user=>{
+    currentUser=user;
+    if(!user){
+      gate.style.display='grid';
+      setBadge("☁ লগইন প্রয়োজন");
+      if(unsub){unsub();unsub=null}
+      return;
+    }
+
+    gate.style.display='none';
+    setBadge("☁ Cloud sync চালু");
+    await loadCloud();
+
+    if(unsub){unsub();unsub=null}
+    const cloudRef=ref(rtdb,"somiti");
+
+    unsub=onValue(cloudRef, snap=>{
+      if(!snap.exists() || applyingRemote) return;
+      const val=snap.val();
+      const cloud=val && val.db ? val.db : null;
+      if(!cloud) return;
+
+      let local=null;
+      try{local=JSON.parse(localStorage.getItem(KEY)||"null")}catch(_){}
+      if(cloud && !sameData(cloud,local)){
+        applyingRemote=true;
+        localStorage.setItem(KEY,JSON.stringify(cloud));
+        setBadge("☁ Cloud data sync হয়েছে");
+        setTimeout(()=>location.reload(),50);
+      }
+    },()=>{
+      setBadge("⚠ Cloud sync error");
+    });
+  });
+}catch(e){
+  setBadge("⚠ Firebase চালু হয়নি");
+  showErr("Firebase connection error: "+(e.message||e));
+}
+
+async function loadCloud(){
+  try{
+    const snap=await get(ref(rtdb,"somiti"));
+    const local=JSON.parse(localStorage.getItem(KEY)||"null");
+
+    if(snap.exists()){
+      const val=snap.val();
+      const cloud=val && val.db ? val.db : null;
+      if(cloud && !sameData(cloud,local)){
+        localStorage.setItem(KEY,JSON.stringify(cloud));
+        location.reload();
+        return;
+      }
+      setBadge("☁ Cloud sync প্রস্তুত");
+    }else if(local){
+      await writeCloud(local);
+      setBadge("☁ Local data → Cloud sync হয়েছে");
+    }else{
+      setBadge("☁ নতুন Cloud database");
+    }
+  }catch(e){
+    console.error(e);
+    setBadge("⚠ Cloud load failed");
+  }
+}
+
+async function writeCloud(data){
+  if(!currentUser || !rtdb) return;
+  await set(ref(rtdb,"somiti"),{
+    db:data,
+    meta:{
+      updatedAt:new Date().toISOString(),
+      updatedBy:currentUser.uid
+    }
+  });
+}
+
+window.queueCloudSync=(data)=>{
+  if(!currentUser || !rtdb || applyingRemote) return;
+  clearTimeout(syncTimer);
+  syncTimer=setTimeout(async()=>{
+    try{
+      await writeCloud(data);
+      setBadge("☁ সর্বশেষ sync: এখন");
+    }catch(e){
+      console.error(e);
+      setBadge("⚠ Sync ব্যর্থ");
+    }
+  },700);
+};
+
+function firebaseError(e){
+  const m={
+    "auth/invalid-credential":"ইমেইল বা পাসওয়ার্ড সঠিক নয়।",
+    "auth/invalid-email":"সঠিক ইমেইল দিন।",
+    "auth/too-many-requests":"অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ পরে চেষ্টা করুন।",
+    "auth/user-disabled":"এই Admin account নিষ্ক্রিয়।",
+    "auth/network-request-failed":"ইন্টারনেট সংযোগ পরীক্ষা করুন।"
+  };
+  return m[e.code]||e.message||"Login failed";
+}
+</script>
+</body></html>

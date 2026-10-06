@@ -1,0 +1,9 @@
+{
+  "name": "ছাত্র সমিতি",
+  "short_name": "ছাত্র সমিতি",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f8f7",
+  "theme_color": "#087f5b",
+  "lang": "bn"
+}

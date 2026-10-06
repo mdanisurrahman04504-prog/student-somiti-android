@@ -1,0 +1,16 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.studentsomiti.app'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.studentsomiti.app"
+        minSdk 23
+        targetSdk 35
+        versionCode 4
+        versionName "4.0"
+    }
+}
